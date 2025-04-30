@@ -1,0 +1,39 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+
+<h2>Search for a City</h2>
+    <input type="text" id="cityInput" placeholder="Enter city name">
+    <button onclick="searchCity()">Search</button>
+
+    <div id="result"></div>
+
+    <script>
+        async function searchCity() {
+            const city = document.getElementById("cityInput").value;
+            const apiKey = "zawRb8cCGZ08mVZx938MOQ==iYXEhfSUQu5Pf7nu"; // Replace with my API Ninjas key
+            const url = `https://api.api-ninjas.com/v1/city?name=${city}`;
+
+            try {
+                const response = await fetch(url, {
+                    headers: { "X-Api-Key": apiKey }
+                });
+                const data = await response.json();
+
+                if (data.length === 0) {
+                    document.getElementById("result").innerHTML = "City not found.";
+                    return;
+                }
+
+                const cityInfo = data[0];
+                document.getElementById("result").innerHTML = `
+                    <strong>City:</strong> ${cityInfo.name} <br>
+                    <strong>Country:</strong> ${cityInfo.country} <br>
+                    <strong>Latitude:</strong> ${cityInfo.latitude} <br>
+                    <strong>Longitude:</strong> ${cityInfo.longitude} <br>
+                    <strong>Population:</strong> ${cityInfo.population}
+                `;
+            } catch (error) {
+                document.getElementById("result").innerHTML = "Error fetching data.";
+            }
+        }
+    </script>

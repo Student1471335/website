@@ -1,0 +1,31 @@
+<h1>{{title}}</h1>
+<p>please login t0 your account here</p>
+
+ <div class="login-container">
+        <h2>Login</h2>
+        <form>
+            <input type="email" placeholder="Enter your email" required>
+            <input type="password" placeholder="Enter your password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <script>
+        function checkLogin(event) {
+            event.preventDefault(); // Prevent form submission
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const error = document.getElementById("error");
+
+            // Hardcoded credentials (for testing purposes only)
+            const validEmail = "user@example.com";
+            const validPassword = "password123";
+
+            if (email === validEmail && password === validPassword) {
+                alert("Login successful!");
+                window.location.href = "user.js"; // Redirect to another page
+            } else {
+                error.style.display = "block";
+            }
+        }
+    </script>
