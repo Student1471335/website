@@ -13,8 +13,8 @@ app.use(bodyParser.json());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "yourpassword",
-    database: "Cityfinderdb"
+    password: "Spacewolf",
+    database: "Cityfinder"
 });
 
 db.connect(err => {
@@ -28,7 +28,7 @@ db.connect(err => {
 // User login route
 app.post("/api/login", async (req, res) => {
     const { email, password } = req.body;
-    
+
     db.query("SELECT * FROM users WHERE email = ?", [email], async (err, results) => {
         if (err) return res.status(500).json({ success: false, message: "Database error" });
         if (results.length === 0) return res.status(401).json({ success: false, message: "Invalid credentials" });
