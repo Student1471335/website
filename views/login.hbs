@@ -1,31 +1,31 @@
 <h1>{{title}}</h1>
 <p>please login t0 your account here</p>
 
- <div class="login-container">
-        <h2>Login</h2>
-        <form>
-            <input type="email" placeholder="Enter your email" required>
-            <input type="password" placeholder="Enter your password" required>
-            <button type="submit">Login</button>
-        </form>
-    </div>
+<div class="login-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        <button type="submit" id="submit">Login</button>
+    </form>
+</div>
 
-    <script>
-        function checkLogin(event) {
-            event.preventDefault(); // Prevent form submission
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("loginForm").addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
             const error = document.getElementById("error");
 
-            // Hardcoded credentials (for testing purposes only)
-            const validEmail = "user@example.com";
-            const validPassword = "password123";
-
-            if (email === validEmail && password === validPassword) {
-                alert("Login successful!");
-                window.location.href = "user.js"; // Redirect to another page
-            } else {
-                error.style.display = "block";
-            }
-        }
-    </script>
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+        });
+    });
+</script>
