@@ -15,8 +15,6 @@ router.post('/',  (req, res) => {
       return res.status(400).send('Missing required fields');
     }
 
-    addDB(username, email, password, res);
-
     bcryptjs.hash(password, 10, (err, hashedPassword) => {
       if (err) {
           console.error('error hashing password ', err);
