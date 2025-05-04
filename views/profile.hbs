@@ -1,0 +1,15 @@
+<h1>{{title}}</h1>
+<p>user profile</p>
+
+<div class="login-container">
+    <h2>Profile</h2>
+    <p id="text">cool text here</p>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const UserId = localStorage.getItem("UserID");
+        document.getElementById("text").textContent = UserId ? `Your User ID is: ${UserId}` : "User not found.";
+    console.log(localStorage.getItem("UserID"));
+    });
+</script>

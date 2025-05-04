@@ -25,7 +25,34 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ email, password })
-            });
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.UserID) {
+                        if (typeof localStorage !== 'undefined') {
+                            console.log("YOU WIN!");
+                        }
+                        else {
+                            console.warn("localStorage not available :()");
+                        }
+                        localStorage.setItem("UserID", data.UserID);
+                        console.log(localStorage.getItem("UserID"));
+                        window.location.href = '/profile'
+                    }
+                    else {
+                        alert('Incorrect email or password, try again');
+                    }
+
+                });
+            if (typeof localStorage !== 'undefined') {
+                console.log("YOU WIN!");
+            }
+            else {
+                console.warn("localStorage not available :()");
+            }
+            localStorage.setItem("UserID", data.UserID);
+            console.log(localStorage.getItem("UserID"));
+            window.location.href = '/profile'
         });
     });
 </script>

@@ -5,17 +5,17 @@ const mysql = require('mysql2');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-  res.render('login', { title: 'CityFinderloginPage' });
+  res.render('profile', { title: 'CityFinderUserPage' });
 });
 
 router.post('/', (req, res) => {
-  const { email, password } = req.body;
-  readFromDB(email, password, res);
+  const { UserID } = req.body;
+  readFromDB(UserID, res);
 
   console.log("hi");
 });
 
-function readFromDB(email, password, res) {
+function readFromDB(UserID, res) {
   const db = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -28,9 +28,9 @@ function readFromDB(email, password, res) {
       console.error("Database connection failed: " + err.stack);
       return;
     }
-    var sql = "SELECT email, password FROM users where email = ?";
+    var sql = "SELECT username, email FROM users where UserID = ?";
 
-    db.query(sql, [email], (err, result) => {
+    db.query(sql, [UserID], (err, result) => {
       if (err) throw err;
       console.log(result[0]);
 
@@ -64,4 +64,7 @@ function readFromDB(email, password, res) {
   });
 }
 
+function deleteFromDB(UserID, res){
+    var sql = "DELETE FROM users WHERE UserID = ?";
+}
 module.exports = router;
