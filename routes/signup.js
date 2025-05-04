@@ -4,7 +4,7 @@ const router = express.Router();
 const mysql = require('mysql2');
 
 router.get('/', (req, res) => {
-    res.render('signup');
+    res.render('signup', {title: 'City Finder Signup Page'});
   });
 
 router.post('/',  (req, res) => {
