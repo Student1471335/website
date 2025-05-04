@@ -4,12 +4,30 @@
 <div class="login-container">
     <h2>Profile</h2>
     <p id="text">cool text here</p>
+    <form id="deleteForm">
+        <button type="submit" id="delete">Delete account</button>
+    </form>
+        
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const UserId = localStorage.getItem("UserID");
         document.getElementById("text").textContent = UserId ? `Your User ID is: ${UserId}` : "User not found.";
-    console.log(localStorage.getItem("UserID"));
+        console.log(localStorage.getItem("UserID"));
+    });
+    document.getElementById("deleteForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const UserID = localStorage.getItem("UserID");
+        console.log("LOOK AT ME");
+
+        fetch('/profile/delete', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ UserID })
+        })
+        window.location.href = '/';
     });
 </script>

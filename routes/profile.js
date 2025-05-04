@@ -15,6 +15,14 @@ router.post('/', (req, res) => {
   console.log("hi");
 });
 
+router.delete('/delete', (req, res) => {
+  const { UserID } = req.body;
+
+  deleteFromDB(UserID, res);
+
+  console.log("hi2");
+});
+
 function readFromDB(UserID, res) {
   const db = mysql.createConnection({
     host: "localhost",
@@ -47,7 +55,7 @@ function readFromDB(UserID, res) {
             console.log("Login successful");
             res.send("Login successful");
           }
-          else{
+          else {
             res.status(401).send("Wrong password, try again");
           }
         });
@@ -64,7 +72,18 @@ function readFromDB(UserID, res) {
   });
 }
 
-function deleteFromDB(UserID, res){
-    var sql = "DELETE FROM users WHERE UserID = ?";
+function deleteFromDB(UserID, res) {
+  const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "Spacewolf",
+    database: "Cityfinder"
+  });
+
+  var sql = "DELETE FROM users WHERE UserID = ?";
+  db.query(sql, [UserID], (err, result) => {
+    if (err) throw err;
+  });
+  db.end();
 }
 module.exports = router;
