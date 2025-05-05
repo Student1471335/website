@@ -53,12 +53,6 @@
                     }
 
                 });
-            if (typeof localStorage !== 'undefined') {
-                console.log("YOU WIN!");
-            }
-            else {
-                console.warn("localStorage not available :()");
-            }
             localStorage.setItem("UserID", data.UserID);
             console.log(localStorage.getItem("UserID"));
             window.location.href = '/profile'

@@ -13,8 +13,8 @@
         </ul>
     </nav>
     <h2>Search for a City</h2>
-<input type="text" id="cityInput" placeholder="Enter city name">
-<button onclick="searchCity()">Search</button>
+    <input type="text" id="cityInput" placeholder="Enter city name">
+    <button onclick="searchCity()" id="search" type="submit">Search</button>
 
     <div id="result"></div>
 
@@ -43,9 +43,19 @@
                     <strong>Longitude:</strong> ${cityInfo.longitude} <br>
                     <strong>Population:</strong> ${cityInfo.population}
                 `;
+                
             } catch (error) {
                 document.getElementById("result").innerHTML = "Error fetching data.";
             }
+                const UserID = localStorage.getItem("UserID");
+
+                fetch('/CitySearch', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ UserID, search:document.getElementById("cityInput").value })
+                })
         }
     </script>
 </body>
