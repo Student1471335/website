@@ -1,33 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <h1>{{title}}</h1>
 <p>user profile</p>
 
-<div class="login-container">
-    <h2>Profile</h2>
-    <p id="text">cool text here</p>
-    <form id="deleteForm">
-        <button type="submit" id="delete">Delete account</button>
-    </form>
-        
-</div>
+<body>
+    <div class="login-container">
+        <h2>Profile</h2>
+        <p id="text">cool text here</p>
+        <form id="deleteForm">
+            <button type="submit" id="delete">Delete account</button>
+        </form>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const UserId = localStorage.getItem("UserID");
-        document.getElementById("text").textContent = UserId ? `Your User ID is: ${UserId}` : "User not found.";
-        console.log(localStorage.getItem("UserID"));
-    });
-    document.getElementById("deleteForm").addEventListener("submit", (event) => {
-        event.preventDefault();
-        const UserID = localStorage.getItem("UserID");
-        console.log("LOOK AT ME");
+    </div>
 
-        fetch('/profile/delete', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ UserID })
-        })
-        window.location.href = '/';
-    });
-</script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const UserID = localStorage.getItem("UserID");
+            console.log("hi1");
+            fetch('/profile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ UserID })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("hi"); // should now run
+                    document.getElementById("text").textContent = data.username
+                        ? `Hello, ${data.username}`
+                        : "User not found.";
+                })
+                .catch(err => {
+                    console.error("Fetch failed:", err);
+                });
+        });
+        document.getElementById("deleteForm").addEventListener("submit", (event) => {
+            event.preventDefault();
+            const UserID = localStorage.getItem("UserID");
+
+            fetch('/profile/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ UserID })
+            })
+            window.location.href = '/';
+        });
+    </script>
+</body>
+
+</html>

@@ -41,25 +41,8 @@ function readFromDB(UserID, res) {
     db.query(sql, [UserID], (err, result) => {
       if (err) throw err;
       console.log(result[0]);
+      res.json({ username: result[0].username });
 
-      if (result[0] === undefined) {
-        res.status(401).send("Wrong email, try again");
-      }
-      else {
-        const hashedPassword = result[0].password;
-
-        bcryptjs.compare(password, hashedPassword, (err, isMatch) => {
-          if (err) throw err;
-
-          if (isMatch) {
-            console.log("Login successful");
-            res.send("Login successful");
-          }
-          else {
-            res.status(401).send("Wrong password, try again");
-          }
-        });
-      }
 
       db.end((error) => {
         if (error) {
