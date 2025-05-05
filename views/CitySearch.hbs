@@ -1,9 +1,20 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<!DOCTYPE html>
+<html lang="en">
 
-<h2>Search for a City</h2>
-    <input type="text" id="cityInput" placeholder="Enter city name">
-    <button onclick="searchCity()">Search</button>
+
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo">CityFinder</a>
+        <ul class="nav-links">
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/CitySearch">Search</a></li>
+            <li><a href="/signup">Sign Up</a></li>
+            <li><a href="/login">Log In</a></li>
+        </ul>
+    </nav>
+    <h2>Search for a City</h2>
+<input type="text" id="cityInput" placeholder="Enter city name">
+<button onclick="searchCity()">Search</button>
 
     <div id="result"></div>
 
@@ -37,3 +48,6 @@
             }
         }
     </script>
+</body>
+
+</html>
