@@ -12,7 +12,6 @@ router.post('/', (req, res) => {
   const { UserID } = req.body;
   readFromDB(UserID, res);
 
-  console.log("hi");
 });
 
 router.delete('/delete', (req, res) => {
@@ -20,7 +19,6 @@ router.delete('/delete', (req, res) => {
 
   deleteFromDB(UserID, res);
 
-  console.log("hi2");
 });
 
 function readFromDB(UserID, res) {
@@ -40,9 +38,11 @@ function readFromDB(UserID, res) {
 
     db.query(sql, [UserID], (err, result) => {
       if (err) throw err;
-      console.log(result[0]);
-      res.json({ username: result[0].username });
-
+      if (result[0] !== undefined){
+        res.json({ username: result[0].username });
+      }
+      
+      
 
       db.end((error) => {
         if (error) {

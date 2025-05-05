@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <body>
     <nav class="navbar">
         <a href="/" class="logo">CityFinder</a>
@@ -12,9 +13,15 @@
     </nav>
     <div class="login-container">
         <h2>Profile</h2>
-        <p id="text">cool text here</p>
+        <p id="text">Not logged in.</p>
         <form id="deleteForm">
             <button type="submit" id="delete">Delete account</button>
+            <p>
+
+            </p>
+        </form>
+        <form id="logOut">
+            <button type="submit" id="logout">Log Out</button>
         </form>
 
     </div>
@@ -54,6 +61,12 @@
             })
             window.location.href = '/';
         });
+        document.getElementById("logOut").addEventListener("submit", (event) => {
+            event.preventDefault();
+            localStorage.setItem("UserID", null);
+            window.location.href = '/login';
+        });
+
     </script>
 </body>
 
