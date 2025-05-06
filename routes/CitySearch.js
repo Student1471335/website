@@ -19,7 +19,7 @@ function addToHistory(UserID, search) {
   const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Spacewolf",
+    password: "Insert password here", //server root/adim password here
     database: "Cityfinder"
   });
   if (UserID === "null"){
