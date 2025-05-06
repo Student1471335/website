@@ -14,6 +14,10 @@
     <div class="login-container">
         <h2>Profile</h2>
         <p id="text">Not logged in.</p>
+        <h2>Search History</h2>
+        <form id="history">
+
+        </form>
         <form id="deleteForm">
             <button type="submit" id="delete">Delete account</button>
             <p>
@@ -29,7 +33,6 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const UserID = localStorage.getItem("UserID");
-            console.log("hi1");
             fetch('/profile', {
                 method: 'POST',
                 headers: {
@@ -39,7 +42,6 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log("hi"); // should now run
                     document.getElementById("text").textContent = data.username
                         ? `Hello, ${data.username}`
                         : "User not found.";
@@ -47,6 +49,28 @@
                 .catch(err => {
                     console.error("Fetch failed:", err);
                 });
+
+            fetch('/profile/history', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ UserID })
+            })
+            .then(response => response.json())
+            .then(data => {
+            for (let i = 0; i < 10; i++) {
+                try {
+                    const paragraph = document.createElement("p");
+                    paragraph.textContent = data.searchHistory[i].search;
+                    document.getElementById("history").appendChild(paragraph);
+                }
+                catch(err) {
+                }
+            }
+                        console.log(data.searchHistory);
+
+            })
         });
         document.getElementById("deleteForm").addEventListener("submit", (event) => {
             event.preventDefault();
@@ -66,6 +90,7 @@
             localStorage.setItem("UserID", null);
             window.location.href = '/login';
         });
+
 
     </script>
 </body>
