@@ -30,7 +30,7 @@ function readFromDB(UserID, res) {
   const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Spacewolf", //redact this in the final version
+    password: "Insert password here",//server root/adim password here 
     database: "Cityfinder"
   });
 
