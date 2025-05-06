@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
 router.post('/', (req, res) => {
   const { UserID } = req.body;
   readFromDB(UserID, res);
-
+  
 });
 
 router.delete('/delete', (req, res) => {
@@ -19,6 +19,11 @@ router.delete('/delete', (req, res) => {
 
   deleteFromDB(UserID, res);
 
+});
+
+router.post('/history', (req,res) =>{
+  const { UserID } = req.body;
+  readFromHistory(UserID, res);
 });
 
 function readFromDB(UserID, res) {
@@ -68,5 +73,29 @@ function deleteFromDB(UserID, res) {
     if (err) throw err;
   });
   db.end();
+}
+
+function readFromHistory(UserID, res){
+  const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "Spacewolf",
+    database: "Cityfinder"
+  });
+  db.connect(err => {
+    if (err) {
+      console.error("Database connection failed: " + err.stack);
+      return;
+    }
+    var sql = "SELECT search FROM userHistory where UserID = ?";
+
+    db.query(sql, [UserID], (err, result) => {
+      if (err) throw err;
+      if (result[0] !== undefined){
+        console.log(result);
+        res.json({ searchHistory: result });
+      }
+    });
+  });
 }
 module.exports = router;
